@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 // Create indent for SignupActivity and start the activity
                Intent intentSignUp = new Intent(getApplicationContext(),SignUpActivity.class);
                startActivity(intentSignUp);
+
+
             }
         });
     }
@@ -74,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(MainActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+
+
+                    //stored login value in shared preferences
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("username", userName);
+
+                    Intent intentBMI1 = new Intent(MainActivity.this, BMIActivity.class);
+                    intentBMI1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentBMI1);
                 }
                 else
                 {
@@ -113,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // check if the Stored password matches with  Password entered by user
                 if (password.equals(storedPassword)) {
-                    loginDataBaseAdapter.deleteEntry(userName);
+                    loginDataBaseAdapter.deleteEntry(userName);   // delete from login table
+
                     Toast.makeText(MainActivity.this, "Deleted entries for user name", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                 } else {
