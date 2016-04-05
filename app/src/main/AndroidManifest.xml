@@ -18,7 +18,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".DeleteDB" />
-        <activity android:name=".BMI"></activity>
+        <activity android:name=".BMIActivity"></activity>
     </application>
 
 </manifest>
