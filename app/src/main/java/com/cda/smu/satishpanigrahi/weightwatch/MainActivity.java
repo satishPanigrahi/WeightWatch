@@ -1,10 +1,12 @@
 package com.cda.smu.satishpanigrahi.weightwatch;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -141,6 +143,78 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void viewRecord(View V){
+
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.activity_view);
+        dialog.setTitle("View record");
+
+
+
+        // get the Refferences of views
+        final EditText editTextUserName2=(EditText)dialog.findViewById(R.id.editTextUserNameToView);
+        final  EditText editTextPassword2=(EditText)dialog.findViewById(R.id.editTextPasswordToView);
+
+        Button btnView =(Button)dialog.findViewById(R.id.buttonToViewRecord);
+
+        btnView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // get The User name and Password
+                String userName = editTextUserName2.getText().toString();
+                String password = editTextPassword2.getText().toString();
+
+                // fetch the Password form database for respective user name
+                String storedPassword = loginDataBaseAdapter.getSinlgeEntry(userName);
+
+                // check if the Stored password matches with  Password entered by user
+                if (password.equals(storedPassword)) {
+                    // Show the entries here
+
+//                    Cursor res = loginDataBaseAdapter.getAllData();
+//                    if(res.getCount() == 0){
+//                        Toast.makeText(MainActivity.this, "No record", Toast.LENGTH_LONG).show();
+//                        dialog.dismiss();
+//                    }
+//                    else{
+//                        StringBuffer buffer = new StringBuffer();
+//                        while(res.moveToNext()){
+//                            buffer.append("HealthCardNo: " +res.getString(0) +"\n");
+//                            buffer.append("Height: " +res.getString(1) +"\n");
+//                            buffer.append("Weight: " +res.getString(2) +"\n \n");
+//                        }
+//
+//                        // Show all data
+//                       // showmessage("Record", buffer.toString());
+//                        Toast.makeText(MainActivity.this, "Need to show buffer", Toast.LENGTH_LONG).show();
+//
+//                    }
+                    Toast.makeText(MainActivity.this, "Need to show buffer", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(MainActivity.this, "User Name or Password does not match", Toast.LENGTH_LONG).show();
+                }
+
+
+
+
+
+            }
+
+        });
+
+
+        dialog.show();
+
+    }
+
+    public void showmessage(String title, String Message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+
+    }
 
 
 
