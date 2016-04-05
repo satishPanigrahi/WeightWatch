@@ -185,10 +185,10 @@ public class MainActivity extends AppCompatActivity {
 //
 //                        // Show all data
 //                       // showmessage("Record", buffer.toString());
-//                        Toast.makeText(MainActivity.this, "Need to show buffer", Toast.LENGTH_LONG).show();
+//                       // Toast.makeText(MainActivity.this, "Need to show buffer", Toast.LENGTH_LONG).show();
 //
 //                    }
-                    Toast.makeText(MainActivity.this, "Need to show buffer", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Error in this part - not able to retrive data", Toast.LENGTH_LONG).show();
 
                 } else {
                     Toast.makeText(MainActivity.this, "User Name or Password does not match", Toast.LENGTH_LONG).show();
