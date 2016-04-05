@@ -2,6 +2,7 @@ package com.cda.smu.satishpanigrahi.weightwatch;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    Button btnSignIn,btnSignUp;
+    Button btnSignIn,btnSignUp, btnReset;
     LoginDataBaseAdapter loginDataBaseAdapter;
 
 
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         // Get The Reference Of Buttons
         btnSignIn=(Button)findViewById(R.id.buttonSignIN);
         btnSignUp=(Button)findViewById(R.id.buttonSignUP);
+        btnReset = (Button)findViewById(R.id.buttonReset);
+
 
         // Set onClick listener on SignUP button
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 // check if the Stored password matches with  Password entered by user
                 if(password.equals(storedPassword))
                 {
+
                     Toast.makeText(MainActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                 }
@@ -81,6 +85,50 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+
+    // Method to delete the login.db
+    public void resetDB(View V){
+
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.activity_delete_db);
+        dialog.setTitle("Reset Database");
+
+
+
+        // get the Refferences of views
+        final EditText editTextUserName1=(EditText)dialog.findViewById(R.id.editTextNameToDelete);
+        final  EditText editTextPassword1=(EditText)dialog.findViewById(R.id.editTextPasswordToDelete);
+
+        Button btnDel =(Button)dialog.findViewById(R.id.buttonDeleteDB);
+
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // get The User name and Password
+                String userName = editTextUserName1.getText().toString();
+                String password = editTextPassword1.getText().toString();
+
+                // fetch the Password form database for respective user name
+                String storedPassword = loginDataBaseAdapter.getSinlgeEntry(userName);
+
+                // check if the Stored password matches with  Password entered by user
+                if (password.equals(storedPassword)) {
+                    loginDataBaseAdapter.deleteEntry(userName);
+                    Toast.makeText(MainActivity.this, "Deleted entries for user name", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(MainActivity.this, "User Name or Password does not match", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
+        dialog.show();
+
+    }
+
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
